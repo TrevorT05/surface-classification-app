@@ -1,1 +1,1 @@
-# pattern-texture-classification-app
+# surface-classification-app
