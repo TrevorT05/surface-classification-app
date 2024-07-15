@@ -147,8 +147,8 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
                 'train_loss': epoch_loss,
                 'val_loss': val_loss,
                 'val_acc': val_acc
-            }, './dtd_resnet50_best.pth')
-            print(f"Model saved to ./dtd_resnet50_best.pth at epoch {epoch+1}")
+            }, './dtd_resnet50_model.pth')
+            print(f"Model saved to ./dtd_resnet50_model.pth at epoch {epoch+1}")
 
 # Evaluate function
 def evaluate_model(model, test_loader):
@@ -169,6 +169,6 @@ num_epochs = 10
 train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=num_epochs)
 
 # Load the best model and evaluate it
-checkpoint = torch.load('./dtd_resnet50_best.pth')
+checkpoint = torch.load('./dtd_resnet50_model.pth')
 model.load_state_dict(checkpoint['model_state_dict'])
 evaluate_model(model, test_loader)
