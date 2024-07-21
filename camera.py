@@ -4,7 +4,6 @@ import sys
 import torch
 import torchvision.transforms as transforms
 import torchvision.models as models
-from torchvision.models import resnet50
 from torchvision.models import ResNet50_Weights
 import torch.nn as nn
 import cv2
@@ -13,6 +12,7 @@ from PyQt5.QtGui import QImage, QPixmap, QPainter, QColor, QPen, QFont
 from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QWidget
 from PIL import Image
 import numpy as np
+
 
 # Path for model file
 checkpoint_path = './dtd_resnet50_model.pth'
@@ -25,6 +25,9 @@ class DTDModel(nn.Module):
 
   def forward(self, x):
     return self.model(x)
+
+
+
 
 # Creates model and loads file
 model = DTDModel()
@@ -49,6 +52,9 @@ class_names = sorted([
   'smeared', 'spiralled', 'sprinkled', 'stained', 'stratified', 'striped', 'studded',
   'swirly', 'veined', 'waffled', 'woven', 'wrinkled', 'zigzagged'
 ])
+
+
+
 
 # Main application class
 class CameraFeed(QWidget):
@@ -175,10 +181,12 @@ class CameraFeed(QWidget):
           image_path = os.path.join(self.example_path, selected_image)
           self.example_label.setFixedHeight(224)
           self.example_label.setPixmap(QPixmap(image_path))
+
+          os.system(f"say {self.prediction} &")
       
       if self.frame_counter == self.pred_interval:
         # Resets frame counter
-        self.frame_counter = 0
+        self.frame_counter = 1
       else:
         # Increments frame counter
         self.frame_counter += 1
@@ -186,6 +194,9 @@ class CameraFeed(QWidget):
 
   def closeEvent(self, event):
     self.cap.release()
+
+
+
 
 # Convert from QImage to PIL image for PyTorch transform
 def qimage_to_pil_image(qimage):
